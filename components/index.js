@@ -1,11 +1,13 @@
-function Clock(options) {
+;function Clock(options) {
     var elem;
     var time;
-    var spanHours = elem.querySelector(".hour");
-    var spanMin = elem.querySelector(".min");
-    var spanSec = elem.querySelector(".sec");
 
-    function renderClock() {
+    function getElem() {
+        if (!elem) renderHtmlClock();
+        return elem;
+    }
+
+    function renderHtmlClock() {
         elem = document.createElement("div");
         elem.id = "clock";
         elem.className = "clock";
@@ -17,6 +19,28 @@ function Clock(options) {
             spanTime.textContent = "00";
             elem.appendChild(spanTime);
         });
+
+        var buttonStop = document.createElement("input");
+        buttonStop.value = "стоп";
+        buttonStop.type = "button";
+        buttonStop.className = "stop";
+
+        elem.appendChild(buttonStop);
+
+        var buttonStart = document.createElement("input");
+        buttonStart.value = "старт";
+        buttonStart.type = "button";
+        buttonStart.className = "start";
+
+        elem.appendChild(buttonStart);
+
+        elem.onclick = function (event) {
+            if (event.target.classList.contains('start')) {
+                start();
+            } else if (event.target.classList.contains('stop')) {
+                stop();
+            }
+        };
     }
 
     function renderTime() {
@@ -26,20 +50,19 @@ function Clock(options) {
         if (hours < 10) {
             hours = "0" + hours;
         }
-        spanHours.innerHTML = hours;
+        elem.querySelector(".hour").innerHTML = hours;
 
         var min = time.getMinutes();
         if (min < 10) {
             min = "0" + min;
         }
-        spanMin.innerHTML = min;
+        elem.querySelector(".min").innerHTML = min;
 
         var sec = time.getSeconds();
         if (sec < 10) {
             sec = "0" + sec;
         }
-        spanSec.innerHTML = sec;
-
+        elem.querySelector(".sec").innerHTML = sec;
     }
 
     function start() {
@@ -52,7 +75,7 @@ function Clock(options) {
         clearInterval(time);
     }
 
-    this.renderClock = renderClock;
-    this.start = start;
+    this.getElem = getElem;
     this.stop = stop;
+    this.start = start;
 }
