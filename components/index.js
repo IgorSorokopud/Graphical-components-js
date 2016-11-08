@@ -1,11 +1,25 @@
 function Clock(options) {
-    var elem = options.elem;
+    var elem;
     var time;
     var spanHours = elem.querySelector(".hour");
     var spanMin = elem.querySelector(".min");
     var spanSec = elem.querySelector(".sec");
 
-    function render() {
+    function renderClock() {
+        elem = document.createElement("div");
+        elem.id = "clock";
+        elem.className = "clock";
+
+        var spanTime;
+        options.items.forEach(function (item, i, arr) {
+            spanTime = document.createElement("span");
+            spanTime.className = item;
+            spanTime.textContent = "00";
+            elem.appendChild(spanTime);
+        });
+    }
+
+    function renderTime() {
         var time = new Date();
 
         var hours = time.getHours();
@@ -30,14 +44,15 @@ function Clock(options) {
 
     function start() {
         stop();
-        render();
-        time = setInterval(render, 1000)
+        renderTime();
+        time = setInterval(renderTime, 1000)
     }
 
     function stop() {
         clearInterval(time);
     }
 
+    this.renderClock = renderClock;
     this.start = start;
     this.stop = stop;
 }

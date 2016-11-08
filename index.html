@@ -28,8 +28,14 @@
 
 <script>
     var pageClock = new Clock({
-        elem: document.getElementById('clock')
+        items: [
+            "hour",
+            "mim",
+            "sec"
+        ]
     });
+    
+    console.log(pageClock.renderClock());
 </script>
 
 <input type="button" onclick="pageClock.start()" value="Старт">
