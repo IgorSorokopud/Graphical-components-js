@@ -74,7 +74,6 @@
     function stop() {
         clearInterval(time);
     }
-
     this.getElem = getElem;
     this.stop = stop;
     this.start = start;
